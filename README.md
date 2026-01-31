@@ -141,9 +141,4 @@ touchButton.rx.tap
 - RxSwift를 단순 문법이 아니라 **상태 흐름 관점**에서 이해하게 됨
 - ViewController가 비대해지는 문제를 MVVM으로 분리하며 체감
 - SnapKit을 사용한 코드 기반 UI 구성에 익숙해짐
-- Supabase를 통해
-    - 인증
-    - OAuth
-    - 세션 관리
-        
-        를 실제 앱 흐름에 연결해봄
+- Supabase를 통해 인증, 세션 관리, OAuth 핸들링
