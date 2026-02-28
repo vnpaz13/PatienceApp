@@ -136,7 +136,11 @@ touchButton.rx.tap
 
 ---
 
-### 🚨 계정 전환 시 Realm 데이터가 유지되는 문제
+## 🛠 Trouble Shooting
+
+### 계정 전환 시 Realm 데이터가 유지되는 문제 해결
+
+### 🚨 문제 상황
 
 로그아웃 후 다른 계정으로 로그인하였을 때,
 
@@ -156,26 +160,34 @@ touchButton.rx.tap
 - `userId` 기반으로 Realm 파일 경로를 동적으로 설정
 - 계정 전환 시 해당 `userId`에 대응하는 Realm 인스턴스를 재생성
 
-### 1️⃣ userId 기반 Realm 파일 분리
+---
 
-```
-config.fileURL=baseURL.appendingPathComponent("realm_\(userId).realm")
+### 🧩 수정 방안
+
+### 1️⃣ Realm 파일 분리
+
+```swift
+private func makeConfiguration(for userId: String) -> Realm.Configuration {
+    var config = Realm.Configuration.defaultConfiguration
+    config.fileURL = baseURL.appendingPathComponent("realm_\(userId).realm")
+    return config
+}
 ```
 
 ---
 
 ### 2️⃣ 로그인 성공 시 Realm 전환
 
-```
-letuserId=tryawaitSupabaseManager.shared.currentUserId()
-tryRealmManager.shared.switchUser(userId:userId)
+```swift
+let userId = try await SupabaseManager.shared.currentUserId()
+try RealmManager.shared.switchUser(userId: userId)
 ```
 
 ---
 
-### 3️⃣ 기존 Realm 접근 방식 수정
+### 3️⃣ 기존 코드 변경
 
-```
+```swift
 // Before
 letrealm=try!Realm()
 
@@ -190,9 +202,9 @@ letrealm=try!RealmManager.shared.current()
 - 계정 A → `realm_A_userId.realm`
 - 계정 B → `realm_B_userId.realm`
 
-계정별 독립적인 로컬 DB를 구성함으로써
+계정별 독립적인 로컬 DB를 구성함으로써, 데이터 혼재 문제를 해결하였다.
 
-데이터 혼재 문제를 해결하였다.
+---
 
 ## ✨ 배운 점 / 느낀 점
 
