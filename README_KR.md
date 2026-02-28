@@ -183,7 +183,7 @@ try RealmManager.shared.switchUser(userId: userId)
 
 ---
 
-### 3️⃣ 기존 코드 변경
+### 3️⃣ 기존 코드 변경 1 (Realm.swift)
 
 ```swift
 // Before
@@ -193,6 +193,19 @@ let realm=try!Realm()
 let realm=try!RealmManager.shared.current()
 ```
 
+---
+### 4️⃣ 기존 코드 변경 2 (SplashVM.swift)
+
+```swift
+let loggedIn = await SupabaseManager.shared.hasValidSession()
+
+if loggedIn {
+    if let userId = try? await SupabaseManager.shared.currentUserId() {
+        try? RealmManager.shared.switchUser(userId: userId)
+    }
+    return .main
+}
+```
 ---
 
 ### ✅ 결과
