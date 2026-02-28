@@ -162,7 +162,7 @@ touchButton.rx.tap
 
 ### 🧩 수정 방안
 
-### 1️⃣ Realm 파일 분리
+### 1️⃣ Realm 파일 분리 (RealmManager.swift)
 
 ```swift
 private func makeConfiguration(for userId: String) -> Realm.Configuration {
@@ -174,7 +174,7 @@ private func makeConfiguration(for userId: String) -> Realm.Configuration {
 
 ---
 
-### 2️⃣ 로그인 성공 시 Realm 전환
+### 2️⃣ 로그인 성공 시 Realm 전환 (SignInVM.swift)
 
 ```swift
 let userId = try await SupabaseManager.shared.currentUserId()
