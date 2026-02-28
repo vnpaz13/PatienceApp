@@ -14,6 +14,8 @@
 		198A2F8D2F2DEB0A000982E6 /* Realm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A2F8C2F2DEB06000982E6 /* Realm.swift */; };
 		198A2F8E2F2E0D4B000982E6 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 19CAEBA22F28D19000D306C3 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		198A2F912F2E120D000982E6 /* RxBSVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A2F902F2E1208000982E6 /* RxBSVC.swift */; };
+		198FFC162F529A1F000940CD /* SessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198FFC152F529A1C000940CD /* SessionStore.swift */; };
+		198FFC182F529A3A000940CD /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198FFC172F529A38000940CD /* RealmManager.swift */; };
 		19CAEB7D2F28CFC000D306C3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CAEB702F28CFC000D306C3 /* AppDelegate.swift */; };
 		19CAEB7E2F28CFC000D306C3 /* GGUK.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 19CAEB732F28CFC000D306C3 /* GGUK.xcdatamodeld */; };
 		19CAEB7F2F28CFC000D306C3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CAEB792F28CFC000D306C3 /* SceneDelegate.swift */; };
@@ -75,6 +77,8 @@
 		1968144E2F2A6F8200C0221A /* GGUK.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GGUK.entitlements; sourceTree = "<group>"; };
 		198A2F8C2F2DEB06000982E6 /* Realm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Realm.swift; sourceTree = "<group>"; };
 		198A2F902F2E1208000982E6 /* RxBSVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxBSVC.swift; sourceTree = "<group>"; };
+		198FFC152F529A1C000940CD /* SessionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStore.swift; sourceTree = "<group>"; };
+		198FFC172F529A38000940CD /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		19CAEB372F28CED100D306C3 /* GGUK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GGUK.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		19CAEB702F28CFC000D306C3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		19CAEB712F28CFC000D306C3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -227,6 +231,8 @@
 		19CAEB8C2F28D04800D306C3 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				198FFC172F529A38000940CD /* RealmManager.swift */,
+				198FFC152F529A1C000940CD /* SessionStore.swift */,
 				198A2F8C2F2DEB06000982E6 /* Realm.swift */,
 			);
 			path = Domain;
@@ -390,6 +396,7 @@
 			files = (
 				1935ED6D2F2CD2CD002A50C7 /* StaticVM.swift in Sources */,
 				19CAEBBF2F28D25A00D306C3 /* UIViewController+Alert.swift in Sources */,
+				198FFC182F529A3A000940CD /* RealmManager.swift in Sources */,
 				1935ED6F2F2CD425002A50C7 /* RxPractice.swift in Sources */,
 				19CAEBB72F28D22700D306C3 /* SignInVM.swift in Sources */,
 				19CAEB7D2F28CFC000D306C3 /* AppDelegate.swift in Sources */,
@@ -418,6 +425,7 @@
 				19E2588D2F29067C009CE215 /* TabBarController.swift in Sources */,
 				19E258952F290A5F009CE215 /* SettingVM.swift in Sources */,
 				19CAEBBB2F28D24C00D306C3 /* MainVC.swift in Sources */,
+				198FFC162F529A1F000940CD /* SessionStore.swift in Sources */,
 				19CAEBC62F28D28000D306C3 /* UIViewController+DisableSuggestions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -466,7 +474,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.vinny.gguk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -505,7 +513,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.vinny.gguk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;

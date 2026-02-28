@@ -30,18 +30,23 @@ final class SupabaseManager {
         
     }
     
-
+    func currentUserId() async throws -> String {
+        let user = try await client.auth.user()
+        return user.id.uuidString
+    }
+    
+    
     func signUp(email: String, password: String) async throws {
         try await client.auth.signUp(
-          email: email,
-          password: password
+            email: email,
+            password: password
         )
     }
     
     func signIn(email: String, password: String) async throws {
         try await client.auth.signIn(
-          email: email,
-          password: password
+            email: email,
+            password: password
         )
     }
     
@@ -78,7 +83,7 @@ final class SupabaseManager {
         case apple
         var supabaseProvider: Provider { .apple }
     }
-
+    
     private let oauthRedirectURL = URL(string: "gguk://auth-callback")!
     
     func startAppleOAuth() async throws {

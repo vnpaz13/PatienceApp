@@ -11,6 +11,7 @@ final class SettingVM {
     
     func logOut() async throws {
         try await SupabaseManager.shared.logOut()
+        RealmManager.shared.clearSession()
     }
     
 }

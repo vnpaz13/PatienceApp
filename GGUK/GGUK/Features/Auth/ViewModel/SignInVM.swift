@@ -7,6 +7,7 @@
 
 import Foundation
 
+
 class SignInVM {
     
     func isLoginEnabled(email: String, password: String) -> Bool {
@@ -16,10 +17,9 @@ class SignInVM {
     }
     
     func signIn(email: String, password: String) async throws {
-        try await SupabaseManager.shared.signIn(
-          email: email,
-          password: password
-        )
+        try await SupabaseManager.shared.signIn(email: email, password: password)
+        
+        let userId = try await SupabaseManager.shared.currentUserId()
+        try RealmManager.shared.switchUser(userId: userId)
     }
-    
 }

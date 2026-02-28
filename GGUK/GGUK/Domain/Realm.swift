@@ -15,40 +15,39 @@ final class CountState: Object {
 
 
 final class RealmFunc {
-    
+
     private static func fetchCounter(realm: Realm) -> CountState {
         if let counter = realm.objects(CountState.self).first {
             return counter
         }
-        
+
         let counter = CountState()
-        counter.totalCount = 0
-        
+
         try! realm.write {
             realm.add(counter)
         }
-        
+
         return counter
     }
-    
+
     static func incrementTotal() {
-        let realm = try! Realm()
+        let realm = try! RealmManager.shared.current()
         let counter = fetchCounter(realm: realm)
-        
+
         try! realm.write {
             counter.totalCount += 1
         }
     }
-    
+
     static func fetchTotal() -> Int {
-        let realm = try! Realm()
+        let realm = try! RealmManager.shared.current()
         let counter = fetchCounter(realm: realm)
         return counter.totalCount
     }
-    
+
     static func resetAll() {
-        let realm = try! Realm()
-        
+        let realm = try! RealmManager.shared.current()
+
         try! realm.write {
             realm.deleteAll()
         }
