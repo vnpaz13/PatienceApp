@@ -136,6 +136,64 @@ touchButton.rx.tap
 
 ---
 
+### 🚨 계정 전환 시 Realm 데이터가 유지되는 문제
+
+로그아웃 후 다른 계정으로 로그인하였을 때,
+
+이전 계정의 로컬 저장 데이터가 그대로 유지되는 문제가 발생하였다.
+
+이는 Realm이 기본적으로 단일 파일(`default.realm`)을 사용하기 때문이며,
+
+계정 개념과 무관하게 동일한 로컬 DB를 참조하고 있었기 때문이다.
+
+---
+
+### 🔍 해결 접근
+
+계정별 데이터 격리를 위해 다음과 같이 구조를 개선하였다.
+
+- Supabase 로그인 성공 시 `userId` 획득
+- `userId` 기반으로 Realm 파일 경로를 동적으로 설정
+- 계정 전환 시 해당 `userId`에 대응하는 Realm 인스턴스를 재생성
+
+### 1️⃣ userId 기반 Realm 파일 분리
+
+```
+config.fileURL=baseURL.appendingPathComponent("realm_\(userId).realm")
+```
+
+---
+
+### 2️⃣ 로그인 성공 시 Realm 전환
+
+```
+letuserId=tryawaitSupabaseManager.shared.currentUserId()
+tryRealmManager.shared.switchUser(userId:userId)
+```
+
+---
+
+### 3️⃣ 기존 Realm 접근 방식 수정
+
+```
+// Before
+letrealm=try!Realm()
+
+// After
+letrealm=try!RealmManager.shared.current()
+```
+
+---
+
+### ✅ 결과
+
+- 계정 A → `realm_A_userId.realm`
+- 계정 B → `realm_B_userId.realm`
+
+계정별 독립적인 로컬 DB를 구성함으로써
+
+데이터 혼재 문제를 해결하였다.
+
 ## ✨ 배운 점 / 느낀 점
 
 - RxSwift를 단순 문법이 아니라 **상태 흐름 관점**에서 이해하게 됨
