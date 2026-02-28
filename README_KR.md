@@ -189,10 +189,10 @@ try RealmManager.shared.switchUser(userId: userId)
 
 ```swift
 // Before
-letrealm=try!Realm()
+let realm=try!Realm()
 
 // After
-letrealm=try!RealmManager.shared.current()
+let realm=try!RealmManager.shared.current()
 ```
 
 ---
