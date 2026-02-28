@@ -143,6 +143,89 @@ touchButton.rx.tap
 
 ---
 
+## 🚨 問題状況および解決
+
+### アカウント切り替え時に Realm データが保持される問題
+
+ログアウト後に別のアカウントで再ログインした際、
+
+前のアカウントのローカル保存データがそのまま表示される問題が発生した。
+
+これは Realm がデフォルトで単一のファイル（`default.realm`）を使用しており、
+
+アカウントの概念とは無関係に同一のローカル DB を参照していたことが原因である。
+
+---
+
+### 🔍 解決アプローチ
+
+アカウントごとのデータ分離を実現するため、以下のように構造を改善した。
+
+- Supabase ログイン成功時に `userId` を取得
+- `userId` を基に Realm ファイルのパスを動的に設定
+- アカウント切り替え時に該当 `userId` に対応する Realm インスタンスを再生成
+
+---
+
+### 🧩 修正内容
+
+### 1️⃣ Realm ファイルの分離（RealmManager.swift）
+
+```swift
+private func makeConfiguration(for userId: String) -> Realm.Configuration {
+    var config = Realm.Configuration.defaultConfiguration
+    config.fileURL = baseURL.appendingPathComponent("realm_\(userId).realm")
+    return config
+}
+```
+
+---
+
+### 2️⃣ ログイン成功時に Realm を切り替え（SignInVM.swift）
+
+```swift
+let userId = try await SupabaseManager.shared.currentUserId()
+try RealmManager.shared.switchUser(userId: userId)
+```
+
+---
+
+### 3️⃣ コード変更 ①（Realm.swift）
+
+```swift
+// Before
+let realm = try! Realm()
+
+// After
+let realm = try! RealmManager.shared.current()
+```
+
+---
+
+### 4️⃣ コード変更 ②（SplashVM.swift）
+
+```swift
+let loggedIn = await SupabaseManager.shared.hasValidSession()
+
+if loggedIn {
+    if let userId = try? await SupabaseManager.shared.currentUserId() {
+        try? RealmManager.shared.switchUser(userId: userId)
+    }
+    return .main
+}
+```
+
+---
+
+### ✅ 結果
+
+- アカウント A → `realm_A_userId.realm`
+- アカウント B → `realm_B_userId.realm`
+
+アカウントごとに独立したローカル DB を構成することで、データが混在する問題を解消した。
+
+---
+
 ## ✨ 学んだこと / 振り返り
 
 - RxSwift を単なる文法ではなく
